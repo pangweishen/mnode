@@ -18,7 +18,7 @@ else:
 # EXEC_PATH is the compiler execute path, for example, CodeSourcery, Keil MDK, IAR
 if  CROSS_TOOL == 'gcc':
 	PLATFORM 	= 'gcc'
-	EXEC_PATH 	= r'C:/Program Files/CodeSourcery/arm-none-eabi/bin'
+	EXEC_PATH 	= r'E:\bernard\tools\gcc-arm-none-eabi-4_9-2015q1-20150306-win32\bin'
 elif CROSS_TOOL == 'keil':
 	PLATFORM 	= 'armcc'
 	EXEC_PATH 	= r'D:/Keil'
@@ -68,7 +68,7 @@ if PLATFORM == 'gcc':
     M_CXXFLAGS = CFLAGS + CXX_FLAGS + ' -mlong-calls -fPIC'
     M_LFLAGS = DEVICE + CXX_FLAGS + ' -Wl,--gc-sections,-z,max-page-size=0x4' +\
                                     ' -shared -fPIC -nostartfiles -static-libgcc'
-    M_POST_ACTION = SIZE + ' $TARGET \n'
+    M_POST_ACTION = STRIP + ' -R .hash $TARGET\n' + SIZE + ' $TARGET \n'
 
 elif PLATFORM == 'armcc':
     # toolchains
