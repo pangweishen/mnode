@@ -29,17 +29,17 @@ Moreover, we need [scons](http://www.scons.org) to build firmware and js engine.
 
 Then, build them with following command:
 
-  cd firmware
-  export BSP_ROOT=`pwd`
-  export RTT_ROOT=your_rt_thread_path
-  export RTT_CC=gcc
-  export RTT_EXEC_PATH=your_arm_gcc_toolchain_path
-  
-  # build firmware
-  scons
-  scons --target=ua -s
-  
-  # build js engine
-  cd ..
-  cd mnode
-  scons --app=mnode
+    cd firmware
+    export BSP_ROOT=`pwd`
+    export RTT_ROOT=your_rt_thread_path
+    export RTT_CC=gcc
+    export RTT_EXEC_PATH=your_arm_gcc_toolchain_path
+    
+    # build firmware
+    scons
+    scons --target=ua -s
+    
+    # build js engine
+    cd ..
+    cd mnode
+    scons --app=mnode
