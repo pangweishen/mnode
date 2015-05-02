@@ -4,7 +4,7 @@ The mnode is a JavaScript runtime for microcontrollers.
 
 ## Hardware
 
-I just use [realboard-lpc4088](https://github.com/RT-Thread/realboard-lpc4088) for mnode development. You can buy this board from [taobao](http://item.taobao.com/item.htm?spm=a1z10.1-c.w4004-5210898174.5.i62kwV&id=37483208096).
+I just use [realboard-lpc4088](https://github.com/RT-Thread/realboard-lpc4088) for mnode development at present. You can buy this board from [taobao](http://item.taobao.com/item.htm?spm=a1z10.1-c.w4004-5210898174.5.i62kwV&id=37483208096).
 
 The realboard-lpc4088 has:
 
