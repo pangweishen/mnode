@@ -1,5 +1,5 @@
 /*
- * File      : application.c
+ * File      : httpc.h
  * This file is part of RT-Thread RTOS
  * COPYRIGHT (C) 2015, RT-Thread Development Team
  *
@@ -19,47 +19,33 @@
  *
  * Change Logs:
  * Date           Author       Notes
- * 2015-05-02     Bernard      First version
+ * 2015-05-02     Bernard      port it from realboard-stm32f4
  */
 
+#ifndef __HTTPC_H__
+#define __HTTPC_H__
+
 #include <rtthread.h>
-#include <components.h>
+#include <lwip/sockets.h>
+#include <lwip/netdb.h>
 
-void rt_init_thread_entry(void* parameter)
+struct http_session
 {
-	{
-		extern rt_err_t mci_hw_init(const char *device_name);
-		mci_hw_init("sd0");
-	}
+    char* user_agent;
+	int   socket;
 
-    /* initialization RT-Thread Components */
-    rt_components_init();
+    /* size of http file */
+    rt_size_t size;
+    rt_off_t  position;
+};
 
-    /* Filesystem Initialization */
-#ifdef RT_USING_DFS
-    {
-#ifdef RT_USING_DFS_ELMFAT
-        /* mount sd card fat partition 1 as root directory */
-        if (dfs_mount("sd0", "/", "elm", 0, 0) == 0)
-        {
-            rt_kprintf("File System initialized!\n");
-        }
-        else
-            rt_kprintf("File System initialzation failed!\n");
+struct http_session* http_session_open(const char* url);
+rt_size_t http_session_read(struct http_session* session, rt_uint8_t *buffer, rt_size_t length);
+rt_off_t http_session_seek(struct http_session* session, rt_off_t offset, int mode);
+int http_session_close(struct http_session* session);
+
+int http_resolve_address(struct sockaddr_in *server, const char * url, char *host_addr, char** request);
+int http_is_error_header(char *mime_buf);
+int http_read_line( int socket, char * buffer, int size );
+
 #endif
-    }
-#endif
-}
-
-int rt_application_init()
-{
-    rt_thread_t tid;
-
-    tid = rt_thread_create("init",
-        rt_init_thread_entry, RT_NULL,
-        2048, RT_THREAD_PRIORITY_MAX/3, 20);
-
-    if (tid != RT_NULL) rt_thread_startup(tid);
-	
-    return 0;
-}
