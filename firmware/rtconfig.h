@@ -130,9 +130,9 @@
 // <item description="LFN with dynamic LFN working buffer on the stack">2</item>
 // <item description="LFN with dynamic LFN working buffer on the heap">3</item>
 // </integer>
-/*#define RT_DFS_ELM_USE_LFN	3*/
+#define RT_DFS_ELM_USE_LFN	3
 // <integer name="RT_DFS_ELM_CODE_PAGE" description="OEM code page" default="936">
-#define RT_DFS_ELM_CODE_PAGE	936
+#define RT_DFS_ELM_CODE_PAGE	437
 // <bool name="RT_DFS_ELM_CODE_PAGE_FILE" description="Using OEM code page file" default="false" />
 /*#define RT_DFS_ELM_CODE_PAGE_FILE*/
 // <integer name="RT_DFS_ELM_MAX_LFN" description="Maximal size of file name length" default="256" />

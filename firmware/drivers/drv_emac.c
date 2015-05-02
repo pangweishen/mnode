@@ -15,6 +15,7 @@
 #include <rtthread.h>
 #include "lwipopts.h"
 #include <netif/ethernetif.h>
+#include <board.h>
 
 #include "lpc_pinsel.h"
 #include "drv_emac.h"
@@ -25,8 +26,8 @@
 
 #define MAX_ADDR_LEN 6
 
-/* EMAC variables located in 16K Ethernet SRAM */
-#define RX_DESC_BASE        (uint32_t)0x20004000
+/* EMAC_RAM_BASE is defined in board.h and the size is 16KB */
+#define RX_DESC_BASE        ETH_RAM_BASE
 #define RX_STAT_BASE        (RX_DESC_BASE + NUM_RX_FRAG*8)
 #define TX_DESC_BASE        (RX_STAT_BASE + NUM_RX_FRAG*8)
 #define TX_STAT_BASE        (TX_DESC_BASE + NUM_TX_FRAG*8)
