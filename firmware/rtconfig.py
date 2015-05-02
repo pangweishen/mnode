@@ -9,6 +9,11 @@ CROSS_TOOL='keil'
 if os.getenv('RTT_CC'):
         CROSS_TOOL = os.getenv('RTT_CC')
 
+if os.getenv('RTT_ROOT'):
+    RTT_ROOT = os.getenv('RTT_ROOT')
+else:
+    RTT_ROOT = 'rt-thread'
+
 # cross_tool provides the cross compiler
 # EXEC_PATH is the compiler execute path, for example, CodeSourcery, Keil MDK, IAR
 if  CROSS_TOOL == 'gcc':
@@ -24,13 +29,14 @@ elif CROSS_TOOL == 'iar':
 if os.getenv('RTT_EXEC_PATH'):
         EXEC_PATH = os.getenv('RTT_EXEC_PATH')
 
-#
+# release or debug building
 BUILD = 'debug'
 
 if PLATFORM == 'gcc':
     # toolchains
     PREFIX = 'arm-none-eabi-'
     CC = PREFIX + 'gcc'
+    CXX = PREFIX + 'g++'
     AS = PREFIX + 'gcc'
     AR = PREFIX + 'ar'
     LINK = PREFIX + 'gcc'
@@ -38,9 +44,11 @@ if PLATFORM == 'gcc':
     SIZE = PREFIX + 'size'
     OBJDUMP = PREFIX + 'objdump'
     OBJCPY = PREFIX + 'objcopy'
+    STRIP = PREFIX + 'strip'
 
     DEVICE = ' -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -ffunction-sections -fdata-sections'
     CFLAGS = DEVICE 
+    CXX_FLAGS = ' -Woverloaded-virtual -fno-exceptions -fno-rtti '
     AFLAGS = ' -c' + DEVICE + ' -x assembler-with-cpp -Wa,-mimplicit-it=thumb '
     LFLAGS = DEVICE + ' -Wl,--gc-sections,-Map=rtthread-lpc40x.map,-cref,-u,Reset_Handler -T lpc40xx_rom.ld'
 
@@ -54,6 +62,13 @@ if PLATFORM == 'gcc':
         CFLAGS += ' -O2'
 
     POST_ACTION = OBJCPY + ' -O binary $TARGET rtthread.bin\n' + SIZE + ' $TARGET \n'
+
+    # module setting 
+    M_CFLAGS = CFLAGS + ' -mlong-calls -fPIC '
+    M_CXXFLAGS = CFLAGS + CXX_FLAGS + ' -mlong-calls -fPIC'
+    M_LFLAGS = DEVICE + CXX_FLAGS + ' -Wl,--gc-sections,-z,max-page-size=0x4' +\
+                                    ' -shared -fPIC -nostartfiles -static-libgcc'
+    M_POST_ACTION = SIZE + ' $TARGET \n'
 
 elif PLATFORM == 'armcc':
     # toolchains
