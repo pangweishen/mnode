@@ -85,7 +85,10 @@ def BuildApplication(TARGET, SConscriptFile, BSP_ROOT = None, RTT_ROOT = None):
 
     sys.path = sys.path + [os.path.join(Rtt_Root, 'tools'), BSP_Root]
 
-    # get configuration from BSP 
+    print 'RTT_ROOT=%s' % Rtt_Root
+    print 'BSP_ROOT=%s' % BSP_Root
+
+	# get configuration from BSP 
     import rtconfig 
     from rtua import GetCPPPATH
     from building import PrepareModuleBuilding
